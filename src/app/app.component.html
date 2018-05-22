@@ -1,32 +1,28 @@
 <!-- Cabecera -->
-<header id="header">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<header id="header" class="container col-lg-10 col-lg-offset-3">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand mb-0 h1">
+        Plataforma CAIRS
+      </a>
 
-  <a class="navbar-brand" href="#">Plataforma CAIRS</a>
-
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Menu" aria-controls="Menu" aria-expanded="false" aria-label="Panel de navegación">
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <div class="collapse navbar-collapse" id="Menu">
-    <ul class="navbar-nav mr-auto">
-      <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search">
-        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
-      </form>
-    </ul>
-    <ul class="navbar-nav pull-right">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Iniciar sesión <span class="sr-only">(current)</span></a>
+  <div class="collapse navbar-collapse" style="justify-content: right;" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Iniciar Sesión</a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Registrase<span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Registrarme</a>
       </li>
     </ul>
   </div>
-</nav>
-  <!-- my-2 my-lg-0 -->
+
+  </nav>
 </header>
+
+<router-outlet></router-outlet>
 
 
 <!-- Contenido -->
