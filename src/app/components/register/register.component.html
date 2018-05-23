@@ -1,6 +1,16 @@
-<div class="col-md-12">
-	<h2>{{ title }}</h2>
-	<form #registerForm="ngForm" class="col-md-7">
+<div class="col-md-9">
+
+	<h2 style="padding-bottom: 20px">{{ title }}</h2>
+
+	<div class="alert alert-success" *ngIf="status == 'success'">
+		¡El registro fue exitoso!, Puedes iniciar sesión <a [routerLink]="[('login')]">aqui</a>
+	</div>
+
+	<div class="alert alert-danger" *ngIf="status == 'error'">
+		{{ message }}
+	</div>
+
+	<form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="col-md-7" >
 		<p>
 			<label for="name">Nombre</label>
 			<input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" class="form-control" required />
@@ -9,8 +19,8 @@
 			</span>
 		</p>
 		<p>
-			<label for="apellido">Apellidos</label>
-			<input type="text" name="apellido" #surname="ngModel" [(ngModel)]="user.surname" class="form-control" required />
+			<label for="surname">Apellidos</label>
+			<input type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname" class="form-control" required />
 			<span *ngIf="!surname.valid && surname.touched">
 				El apellido es obligatorio.
 			</span>
