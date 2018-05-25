@@ -21,17 +21,29 @@ import { Component, OnInit, } from '@angular/core';
  {
  	public title:string;
  	public user: User;
+ 	public token;
+ 	public identity;
+ 	public status: string;
+ 	public message: string;
  	
  	//proposito principal es asignar valores a las variables
- 	constructor(private _userService: UserService) 
+ 	constructor(private _userService: UserService, private _route: ActivatedRoute, private _router: Router) 
  	{
  		this.title = 'Iniciar Sesión';
  		this.user = new User(1, 'ROLE_USER', '', '', '', '');
+ 		this.identity = _userService.getIdentity();
  	}
 
  	ngOnInit()
  	{
+ 		//console.log('login.component cargado correctamente');
+ 		//this.logout();
+ 		if (this.identity != null) {
+ 			this._router.navigate(['']);
+ 		}
+ 		
  		console.log('login.component cargado correctamente');
+ 		this.logout();
  	}
 
  	onSubmit(form)
@@ -41,19 +53,58 @@ import { Component, OnInit, } from '@angular/core';
  		this._userService.signup(this.user).subscribe(
  			response => {
  				//token
- 				console.log(response);
+ 				if (response.status != 'error') 
+ 				{
+ 					this.status = 'success';
+	 				this.token = response;
 
- 				this._userService.signup(this.user, true).subscribe(
- 						response => {
- 							console.log(response)
- 						},
- 						error => {
- 							console.log(<any>error);
- 						});
+	 				//crear espacio en local storage
+	 				localStorage.setItem('token', this.token);
+
+	 				this._userService.signup(this.user, true).subscribe(
+	 						response => {
+	 							//console.log(response)
+	 							this.identity = response;
+	 							//en el local storage solo se pueden almacenar datos en JSON
+	 							localStorage.setItem('identity', JSON.stringify(this.identity));
+
+	 							form.reset();
+
+	 							this._router.navigate([''])
+	 						},
+	 						error => {
+	 							console.log(<any>error);
+	 						});
+	 			}
+	 			else
+	 			{
+	 				this.status = 'error';
+	 				this.message = response.message;
+	 			}
  			},
  			error => {
  				console.log(<any>error);
  			});
+ 	}
+
+ 	logout()
+ 	{
+ 		this._route.params.subscribe(params =>{
+ 			let logout = +params['sure'];
+
+ 			if (logout == 1) 
+ 			{
+ 				//borrar dato de local storage
+ 				localStorage.removeItem('identity');
+ 				localStorage.removeItem('token');
+
+ 				this.identity = null;
+ 				this.token = null;
+
+ 				//redireccion
+ 				this._router.navigate(['']);
+ 			}
+ 		})
  	}
  }
 

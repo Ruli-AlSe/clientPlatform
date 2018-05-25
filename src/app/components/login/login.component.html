@@ -1,6 +1,14 @@
 <div class="col-md-9">
 	<h2 style="padding-bottom: 20px">{{ title }}</h2>
 
+	<div class="alert alert-success" *ngIf="status == 'success'">
+		¡Iniciaste sesion!
+	</div>
+
+	<div class="alert alert-danger" *ngIf="status == 'error'">
+		{{ message }}
+	</div>
+
 	<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="col-md-7">
 
 		

@@ -22,17 +22,25 @@ import { Component, OnInit, } from '@angular/core';
  	public user: User;
  	public status: string;
  	public message: string;
+ 	public identity;
  	
  	//proposito principal es asignar valores a las variables
  	constructor(private _userService: UserService, private _route: ActivatedRoute, private _router: Router) 
  	{
  		this.title = 'Registrar';
  		this.user = new User(1, 'ROLE_USER', '', '', '', '');
+ 		this.identity = _userService.getIdentity();
  	}
 
  	ngOnInit()
  	{
- 		console.log('register.component cargado correctamente');
+ 		if (this.identity != null) {
+ 			this._router.navigate(['']);
+ 		}
+ 		else
+ 		{
+ 			console.log('register.component cargado correctamente');
+ 		}
  	}
 
  	onSubmit(form)
