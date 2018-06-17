@@ -21,12 +21,15 @@
 
   <div class="collapse navbar-collapse" style="justify-content: right;" id="navbarNav" *ngIf="identity">
     <ul class="navbar-nav"  >
+      <li *ngIf="identity.image">
+        <img style="width: 50px; height: 50px" src="{{identity.image}}">
+      </li>
       <li class="nav-item">
-        <a class="nav-link">{{'Hola ' + identity.name + ' ' + identity.surname}}</a>
+        <a class="nav-link">{{'Bienvenido ' + identity.name}}</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['logout', 1]">
-          <svg id="i-signout" viewBox="0 -3 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+          <svg id="i-signout" viewBox="0 -3 32 32" width="18" height="18" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stoke-width="2">
     <path d="M28 16 L8 16 M20 8 L28 16 20 24 M11 28 L3 28 3 4 11 4" />
 </svg>
           Cerrar Sesión

@@ -19,13 +19,6 @@
 			</span>
 		</p>
 		<p>
-			<label for="surname">Apellidos</label>
-			<input type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname" class="form-control" required />
-			<span *ngIf="!surname.valid && surname.touched">
-				El apellido es obligatorio.
-			</span>
-		</p>
-		<p>
 			<label for="email">Email</label>
 			<input type="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" required />
 			<span *ngIf="!email.valid && email.touched">

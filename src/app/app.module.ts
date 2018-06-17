@@ -10,6 +10,20 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DefaultComponent } from './components/default/default.component';
 
+//Para login con Facebook
+import { SocialLoginModule, AuthServiceConfig } from "angular5-social-login";
+import { FacebookLoginProvider } from "angular5-social-login"; 
+export function getAuthServiceConfigs() {
+  let config = new AuthServiceConfig(
+      [
+        {
+          id: FacebookLoginProvider.PROVIDER_ID,
+          provider: new FacebookLoginProvider("163638510973296")
+        },
+      ]);
+  return config;
+}
+
 
 @NgModule({
   declarations: [
@@ -23,11 +37,14 @@ import { DefaultComponent } from './components/default/default.component';
     BrowserModule,
     routing,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SocialLoginModule
   ],
   providers: [
-    appRoutingProviders
-  ],
+  appRoutingProviders,
+  { provide: AuthServiceConfig,
+    useFactory: getAuthServiceConfigs
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

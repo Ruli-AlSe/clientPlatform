@@ -8,6 +8,10 @@ import { Component, OnInit, } from '@angular/core';
 
  import { UserService } from '../../services/user.service';
 
+ //Para login con Facebook
+ import { AuthService, FacebookLoginProvider } from 'angular5-social-login';
+
+
  //define parametros o metadatos para configuracion del componente
  @Component({
  	selector: 'login',
@@ -27,7 +31,7 @@ import { Component, OnInit, } from '@angular/core';
  	public message: string;
  	
  	//proposito principal es asignar valores a las variables
- 	constructor(private _userService: UserService, private _route: ActivatedRoute, private _router: Router) 
+ 	constructor(private _userService: UserService, private _route: ActivatedRoute, private _router: Router, private _socialAuthService: AuthService) 
  	{
  		this.title = 'Iniciar Sesión';
  		this.user = new User(1, 'ROLE_USER', '', '', '', '');
@@ -104,7 +108,36 @@ import { Component, OnInit, } from '@angular/core';
  				//redireccion
  				this._router.navigate(['']);
  			}
- 		})
+ 		});
  	}
+
+ 	public facebookLogin() 
+ 	{
+    	let socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    	this._socialAuthService.signIn(socialPlatformProvider).then(
+      		(userData) => {
+            	//console.log(userData);
+            	this.identity = userData;
+            	localStorage.setItem('identity', JSON.stringify(this.identity));
+            	this._router.navigate([''])
+       		});
+    	//this will return user data from facebook. What you need is a user token which you will send it to the server
+        //this.sendToRestApiMethod(userData.token);
+	}
+/*
+	sendToRestApiMethod(token: string)
+	{
+    	this._http.post('url to facebook login here', { token: token })
+        	.subscribe(onSuccess => {
+                       //login was successful
+                       console.log(onSuccess);
+                       //save the token that you got from your REST API in your preferred location i.e. as a Cookie or LocalStorage as you do with normal login
+            		   }, onFail => {
+                       //login was unsuccessful
+                       //show an error message
+                       console.log(<any>onFail);
+               }
+       );
+	}*/
  }
 
