@@ -8,7 +8,7 @@
 	<div class="alert alert-danger" *ngIf="status == 'error'">
 		{{ message }}
 	</div>
-
+	<!--
 	<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="col-md-7">
 
 		
@@ -31,13 +31,12 @@
 		<input type="submit" value="Entrar" class="btn btn-primary" [disabled]="!loginForm.form.valid" />
 
 	</form>
+-->
 </div>
 
-<div class="col-md-7">
+<div class="col-md-12" align="center">
 	<br/>
 	<br/>
-	<p>Puedes accesar también por redes sociales.</p>
+	<p>El acceso y uso de esta página es realizado por medio de tu cuenta de <b>Facebook</b> o <b>Pinterest</b>.</p>
 	<button class="fb-login-button" style="padding-right: 0px; padding-left: 0px" data-width="600" data-max-rows="2" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true" (click)="facebookLogin()">Continuar con Facebook</button> 
-
-	<img src="https://graph.facebook.com/10211947727231572/picture?type=normal">
 </div>

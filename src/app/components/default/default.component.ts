@@ -25,7 +25,7 @@ import { Component, OnInit, } from '@angular/core';
 
  	ngOnInit()
  	{
- 		console.log('default.component cargado correctamente');
+ 		//console.log('default.component cargado correctamente');
  	}
  }
 

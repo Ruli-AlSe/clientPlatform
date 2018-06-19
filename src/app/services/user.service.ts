@@ -16,7 +16,7 @@ export class UserService
 	{
 		this.url = GLOBAL.url;
 	}
-
+/*
 	prueba()
 	{
 		return this.url;
@@ -34,7 +34,20 @@ export class UserService
 		//peticion AJAX por POST
 		return this._http.post(this.url+'register', params, {headers: headers});
 	}
+*/
+	loginFB(user): Observable<any>
+	{
+		//Obtener el objeto user y transformarlo a formate JSON
+		let json = JSON.stringify(user);
+		let params = 'json='+json;
 
+		//Establecer cabeceras
+		let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+		//peticion AJAX por POST
+		return this._http.post(this.url+'registerFB', params, {headers: headers});
+	}
+/*
 	signup(user, gettoken = null): Observable<any>
 	{
 		if (gettoken != null) 
@@ -51,7 +64,7 @@ export class UserService
 		//peticion AJAX por POST
 		return this._http.post(this.url+'login', params, {headers: headers});
 	}
-
+*/
 	getIdentity()
 	{
 		let identity = JSON.parse(localStorage.getItem('identity'));

@@ -28,7 +28,7 @@ import { Component, OnInit, } from '@angular/core';
  	constructor(private _userService: UserService, private _route: ActivatedRoute, private _router: Router) 
  	{
  		this.title = 'Registrar';
- 		this.user = new User(1, 'ROLE_USER', '', '', '');
+ 		this.user = new User(1, 'ROLE_USER', '', '', '', '');
  		this.identity = _userService.getIdentity();
  	}
 
@@ -37,12 +37,8 @@ import { Component, OnInit, } from '@angular/core';
  		if (this.identity != null) {
  			this._router.navigate(['']);
  		}
- 		else
- 		{
- 			console.log('register.component cargado correctamente');
- 		}
  	}
-
+/*
  	onSubmit(form)
  	{
  		//console.log(this.user);
@@ -67,5 +63,6 @@ import { Component, OnInit, } from '@angular/core';
 
  			}, error =>{console.log(<any>error)})
  	}
+ 	*/
  }
 

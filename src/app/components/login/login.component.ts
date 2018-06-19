@@ -40,16 +40,12 @@ import { Component, OnInit, } from '@angular/core';
 
  	ngOnInit()
  	{
- 		//console.log('login.component cargado correctamente');
- 		//this.logout();
  		if (this.identity != null) {
  			this._router.navigate(['']);
  		}
- 		
- 		console.log('login.component cargado correctamente');
  		this.logout();
  	}
-
+/*
  	onSubmit(form)
  	{
  		//console.log(this.user);
@@ -90,7 +86,7 @@ import { Component, OnInit, } from '@angular/core';
  				console.log(<any>error);
  			});
  	}
-
+*/
  	logout()
  	{
  		this._route.params.subscribe(params =>{
@@ -118,26 +114,18 @@ import { Component, OnInit, } from '@angular/core';
       		(userData) => {
             	//console.log(userData);
             	this.identity = userData;
+        		this._userService.loginFB(this.identity).subscribe(
+        			response => {
+        				if (response.status != 'error') {
+        					console.log(response.message);
+        				}
+        	},
+        	error => {
+        		console.log(<any>error);
+        	});
             	localStorage.setItem('identity', JSON.stringify(this.identity));
-            	this._router.navigate([''])
+            	this._router.navigate(['']);
        		});
-    	//this will return user data from facebook. What you need is a user token which you will send it to the server
-        //this.sendToRestApiMethod(userData.token);
 	}
-/*
-	sendToRestApiMethod(token: string)
-	{
-    	this._http.post('url to facebook login here', { token: token })
-        	.subscribe(onSuccess => {
-                       //login was successful
-                       console.log(onSuccess);
-                       //save the token that you got from your REST API in your preferred location i.e. as a Cookie or LocalStorage as you do with normal login
-            		   }, onFail => {
-                       //login was unsuccessful
-                       //show an error message
-                       console.log(<any>onFail);
-               }
-       );
-	}*/
  }
 
