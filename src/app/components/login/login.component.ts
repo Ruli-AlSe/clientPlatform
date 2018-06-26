@@ -28,8 +28,6 @@ import { FacebookService, LoginResponse, LoginOptions } from 'ngx-facebook';
  	public user: User;
  	public token;
  	public identity;
- 	//public status: string;
- 	//public message: string;
  	public params;
  	
  	//proposito principal es asignar valores a las variables
@@ -70,24 +68,6 @@ import { FacebookService, LoginResponse, LoginOptions } from 'ngx-facebook';
 
  	facebookLogin() 
  	{
- 		/*
- 		this.options = {
-  			scope: 'email,user_friends,user_likes,user_location,user_photos,user_posts,user_status,pages_show_list',
-  			return_scopes: false,
-  			enable_profile_selector: true
-  		};
- 	    this.FB.login(this.options).then((response: LoginResponse) => {
- 	    	console.log(response.authResponse)
- 	    	//this.identity = response.authResponse;
- 	    	//localStorage.setItem('identity', JSON.stringify(this.identity));
- 	    	this.params = {
-  			scope: 'me?fields=name,email,location',
-  			accessToken: response.authResponse.accessToken 
-  		}
- 	    }).catch((error: any) => console.error(error));
-
- 	    this.FB.api('/me','GET', {"fields":"email,location,first_name,last_name"}).then(res => console.log(res)).catch(e => console.log(e));
- 	    */
 	 	const loginOptions: LoginOptions = {
 	      enable_profile_selector: true,
 	      return_scopes: true,
@@ -96,7 +76,6 @@ import { FacebookService, LoginResponse, LoginOptions } from 'ngx-facebook';
 
 	    this.fb.login(loginOptions)
 	      .then((res: LoginResponse) => {
-	        //console.log('Logged in', res);
 	        this.getProfile();
 	      })
 	      .catch(this.handleError);
@@ -106,52 +85,29 @@ import { FacebookService, LoginResponse, LoginOptions } from 'ngx-facebook';
     	console.error('Error processing action', error);
   	}
 
-  	getProfile() 
-    {
-    	this.fb.api('/me?fields=email,first_name,last_name,picture{url}')
-      	.then((res: any) => {
-        	//console.log(res);
-          this.identity = res;
-          this.user.id = res.id;
-          this.user.first_name = res.first_name;
-          this.user.last_name = res.last_name;
-          this.user.sm = 'Facebook';
-          this.user.email = res.email;
-          localStorage.setItem('identity', JSON.stringify(this.identity));
-          this._userService.loginFB(this.user).subscribe(
-              response => {
-                  console.log(response);
-                  this._router.navigate(['']);
-          },
-          error => {
-            console.log(<any>error);
-          });
-      	})
-      	.catch(this.handleError);
-  }
+	getProfile() 
+  {
+  	this.fb.api('/me?fields=email,first_name,last_name,picture{url}')
+    	.then((res: any) => {
+      	//console.log(res);
+        this.identity = res;
+        this.user.id = res.id;
+        this.user.first_name = res.first_name;
+        this.user.last_name = res.last_name;
+        this.user.sm = 'Facebook';
+        this.user.email = res.email;
+        localStorage.setItem('identity', JSON.stringify(this.identity));
+        this._userService.loginFB(this.user).subscribe(
+            response => {
+                console.log(response);
+                this._router.navigate(['']);
+        },
+        error => {
+          console.log(<any>error);
+        });
+    	})
+    	.catch(this.handleError);
+}
  
-
-/*
- 	public facebookLogin() 
- 	{
-    	let socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-    	this._socialAuthService.signIn(socialPlatformProvider).then(
-      		(userData) => {
-            	//console.log(userData);
-            	this.identity = userData;
-        		this._userService.loginFB(this.identity).subscribe(
-        			response => {
-        				if (response.status != 'error') {
-        					console.log(response.message);
-        				}
-        	},
-        	error => {
-        		console.log(<any>error);
-        	});
-            	localStorage.setItem('identity', JSON.stringify(this.identity));
-            	this._router.navigate(['']);
-       		});
-	}
-*/	
  }
 

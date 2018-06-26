@@ -23,16 +23,7 @@ export class AppComponent implements OnInit, DoCheck{
   {
   	this.identity = this._userService.getIdentity();
   	this.token = this._userService.getToken();
-
-    /*//Se inicializa el SDK de Facebook
-    let initParams: InitParams = {
-      appId: '163638510973296',
-      xfbml: true,
-      version: 'v3.0'
-    };
- 
-    FB.init(initParams);
-    */
+    //Iniciar el sdk de facebook
     fb.init({
       appId: '163638510973296',
       version: 'v3.0'

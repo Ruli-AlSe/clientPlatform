@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { DefaultComponent } from './components/default/default.component';
 import { QueryComponent } from './components/query/query.component';
 
@@ -36,7 +35,6 @@ export function getAuthServiceConfigs() {
   //Definir directivas, componentes y pipes para mostrarse vistas de web 
     AppComponent,
     LoginComponent,
-    RegisterComponent,
     DefaultComponent,
     QueryComponent
   ],
