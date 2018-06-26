@@ -9,10 +9,16 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DefaultComponent } from './components/default/default.component';
+import { QueryComponent } from './components/query/query.component';
 
 //Para login con Facebook
 import { SocialLoginModule, AuthServiceConfig } from "angular5-social-login";
 import { FacebookLoginProvider } from "angular5-social-login"; 
+
+//importar el SDK de Facebook
+import { FacebookModule } from 'ngx-facebook';
+
+
 export function getAuthServiceConfigs() {
   let config = new AuthServiceConfig(
       [
@@ -31,14 +37,16 @@ export function getAuthServiceConfigs() {
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    DefaultComponent
+    DefaultComponent,
+    QueryComponent
   ],
   imports: [
     BrowserModule,
     routing,
     FormsModule,
     HttpClientModule,
-    SocialLoginModule
+    SocialLoginModule,
+    FacebookModule.forRoot()
   ],
   providers: [
   appRoutingProviders,

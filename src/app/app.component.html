@@ -4,6 +4,9 @@
       <a class="navbar-brand mb-0 h1" [routerLink]="[('')]">
         Plataforma CAIRS
       </a>
+      <a class="nav-link" [routerLink]="[('query')]">
+        Consultas
+      </a>
 
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -23,17 +26,17 @@
 
   <div class="collapse navbar-collapse" style="justify-content: right;" id="navbarNav" *ngIf="identity">
     <ul class="navbar-nav"  >
-      <li *ngIf="identity.image">
-        <img style="width: 50px; height: 50px" src="{{identity.image}}">
+      <li *ngIf="identity.picture.data.url">
+        <img style="width: 40px; height: 40px" src="{{identity.picture.data.url}}">
       </li>
       <li class="nav-item">
-        <a class="nav-link">{{'Bienvenido ' + identity.name}}</a>
+        <a style="padding-right: 30px" class="nav-link">{{identity.first_name}}</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['logout', 1]">
           <svg id="i-signout" viewBox="0 -3 32 32" width="18" height="18" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stoke-width="2">
-    <path d="M28 16 L8 16 M20 8 L28 16 20 24 M11 28 L3 28 3 4 11 4" />
-</svg>
+           <path d="M28 16 L8 16 M20 8 L28 16 20 24 M11 28 L3 28 3 4 11 4" />
+          </svg>
           Cerrar Sesión
         </a>
       </li>

@@ -4,6 +4,10 @@ import { Component, OnInit, DoCheck } from '@angular/core';
 import { UserService } from './services/user.service';
 //se importa el servicio en el provider para obtener la nformacion del localstorage
 
+//Impportar el servicio de Facebook
+import { FacebookService, InitParams } from 'ngx-facebook';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,15 +19,29 @@ export class AppComponent implements OnInit, DoCheck{
   public identity;
   public token;
 
-  constructor(private _userService: UserService)
+  constructor(private _userService: UserService, private fb: FacebookService)
   {
   	this.identity = this._userService.getIdentity();
   	this.token = this._userService.getToken();
+
+    /*//Se inicializa el SDK de Facebook
+    let initParams: InitParams = {
+      appId: '163638510973296',
+      xfbml: true,
+      version: 'v3.0'
+    };
+ 
+    FB.init(initParams);
+    */
+    fb.init({
+      appId: '163638510973296',
+      version: 'v3.0'
+    });
   }
 
   ngOnInit()
   {
-  	console.log(this.identity);
+      
   }
 
   ngDoCheck()

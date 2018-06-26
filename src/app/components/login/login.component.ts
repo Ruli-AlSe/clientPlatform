@@ -10,8 +10,9 @@ import { Component, OnInit, } from '@angular/core';
 
  //Para login con Facebook
  import { AuthService, FacebookLoginProvider } from 'angular5-social-login';
+import { FacebookService, LoginResponse, LoginOptions } from 'ngx-facebook';
 
-
+//declare const FB: any;
  //define parametros o metadatos para configuracion del componente
  @Component({
  	selector: 'login',
@@ -27,14 +28,15 @@ import { Component, OnInit, } from '@angular/core';
  	public user: User;
  	public token;
  	public identity;
- 	public status: string;
- 	public message: string;
+ 	//public status: string;
+ 	//public message: string;
+ 	public params;
  	
  	//proposito principal es asignar valores a las variables
- 	constructor(private _userService: UserService, private _route: ActivatedRoute, private _router: Router, private _socialAuthService: AuthService) 
+ 	constructor(private fb: FacebookService, private _userService: UserService, private _route: ActivatedRoute, private _router: Router, private _socialAuthService: AuthService) 
  	{
  		this.title = 'Iniciar Sesión';
- 		this.user = new User(1, 'ROLE_USER', '', '', '', '');
+ 		this.user = new User(1, '', '', '', '');
  		this.identity = _userService.getIdentity();
  	}
 
@@ -45,48 +47,7 @@ import { Component, OnInit, } from '@angular/core';
  		}
  		this.logout();
  	}
-/*
- 	onSubmit(form)
- 	{
- 		//console.log(this.user);
 
- 		this._userService.signup(this.user).subscribe(
- 			response => {
- 				//token
- 				if (response.status != 'error') 
- 				{
- 					this.status = 'success';
-	 				this.token = response;
-
-	 				//crear espacio en local storage
-	 				localStorage.setItem('token', this.token);
-
-	 				this._userService.signup(this.user, true).subscribe(
-	 						response => {
-	 							//console.log(response)
-	 							this.identity = response;
-	 							//en el local storage solo se pueden almacenar datos en JSON
-	 							localStorage.setItem('identity', JSON.stringify(this.identity));
-
-	 							form.reset();
-
-	 							this._router.navigate([''])
-	 						},
-	 						error => {
-	 							console.log(<any>error);
-	 						});
-	 			}
-	 			else
-	 			{
-	 				this.status = 'error';
-	 				this.message = response.message;
-	 			}
- 			},
- 			error => {
- 				console.log(<any>error);
- 			});
- 	}
-*/
  	logout()
  	{
  		this._route.params.subscribe(params =>{
@@ -107,6 +68,70 @@ import { Component, OnInit, } from '@angular/core';
  		});
  	}
 
+ 	facebookLogin() 
+ 	{
+ 		/*
+ 		this.options = {
+  			scope: 'email,user_friends,user_likes,user_location,user_photos,user_posts,user_status,pages_show_list',
+  			return_scopes: false,
+  			enable_profile_selector: true
+  		};
+ 	    this.FB.login(this.options).then((response: LoginResponse) => {
+ 	    	console.log(response.authResponse)
+ 	    	//this.identity = response.authResponse;
+ 	    	//localStorage.setItem('identity', JSON.stringify(this.identity));
+ 	    	this.params = {
+  			scope: 'me?fields=name,email,location',
+  			accessToken: response.authResponse.accessToken 
+  		}
+ 	    }).catch((error: any) => console.error(error));
+
+ 	    this.FB.api('/me','GET', {"fields":"email,location,first_name,last_name"}).then(res => console.log(res)).catch(e => console.log(e));
+ 	    */
+	 	const loginOptions: LoginOptions = {
+	      enable_profile_selector: true,
+	      return_scopes: true,
+	      scope: 'public_profile,user_friends,email,pages_show_list'
+	    };
+
+	    this.fb.login(loginOptions)
+	      .then((res: LoginResponse) => {
+	        //console.log('Logged in', res);
+	        this.getProfile();
+	      })
+	      .catch(this.handleError);
+	 }
+
+	private handleError(error) {
+    	console.error('Error processing action', error);
+  	}
+
+  	getProfile() 
+    {
+    	this.fb.api('/me?fields=email,first_name,last_name,picture{url}')
+      	.then((res: any) => {
+        	//console.log(res);
+          this.identity = res;
+          this.user.id = res.id;
+          this.user.first_name = res.first_name;
+          this.user.last_name = res.last_name;
+          this.user.sm = 'Facebook';
+          this.user.email = res.email;
+          localStorage.setItem('identity', JSON.stringify(this.identity));
+          this._userService.loginFB(this.user).subscribe(
+              response => {
+                  console.log(response);
+                  this._router.navigate(['']);
+          },
+          error => {
+            console.log(<any>error);
+          });
+      	})
+      	.catch(this.handleError);
+  }
+ 
+
+/*
  	public facebookLogin() 
  	{
     	let socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
@@ -127,5 +152,6 @@ import { Component, OnInit, } from '@angular/core';
             	this._router.navigate(['']);
        		});
 	}
+*/	
  }
 
